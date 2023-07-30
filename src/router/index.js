@@ -12,8 +12,13 @@ const Router = createRouter({
         {
             path: '/main',
             component: Layout,
-            redirect: '/main/user',
+            redirect: '/main/index',
             children: [
+                {
+                    path: 'index',
+                    name: '主页',
+                    component: import('@/components/main/index.vue')
+                },
                 {
                     path: 'user',
                     name: '用户管理',
@@ -53,6 +58,16 @@ const Router = createRouter({
                     path: 'worker',
                     name: '工人管理',
                     component: import('@/components/main/worker/index.vue')
+                },
+                {
+                    path: 'budget',
+                    name: '预算管理',
+                    component: import('@/components/main/cost/budget.vue')
+                },
+                {
+                    path: 'account',
+                    name: '记账本',
+                    component: import('@/components/main/cost/account.vue')
                 },
                 {
                     path: 'salary',

@@ -4,6 +4,7 @@ import { userAuthConfig, statusConfig } from '@/config/dataConfig.js'
 import { queryUserList, saveUser, updateUser, removeUser, updateStatus } from '@/api/user.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getData } from '@/utils/storage.js'
+import { listProject } from '@/api/project'
 
 const query = ref({
   userName: '',
@@ -12,6 +13,8 @@ const query = ref({
 })
 
 const dataList = ref([])
+
+const projectList = ref([])
 
 findAll()
 
@@ -22,6 +25,10 @@ function findAll() {
     ElMessage.error(err)
   })
 }
+
+listProject().then(res => {
+  projectList.value = res.data
+})
 
 const model = ref({
   title: '用户修改',
@@ -76,7 +83,8 @@ const form = ref({
   phoneNum: '', // 手机号
   status: '', // 状态
   password: '', // 密码
-  userAuth: '' // 权限级别
+  userAuth: '', // 权限级别
+  projectId: ''
 })
 
 const authorize = (auth) => {
@@ -85,7 +93,7 @@ const authorize = (auth) => {
   return false
 }
 
-
+function handleChange() { form.value.projectId = ''}
 
 function save() {
   if (model.value.isEdit) {
@@ -173,8 +181,13 @@ function handleClose() {
         <el-switch v-model="form.status" active-text="启用" inactive-text="停用" :active-value="1" :inactive-value="0"></el-switch>
       </el-form-item>
       <el-form-item label="权限设置">
-        <el-select v-model="form.userAuth" placeholder="请设置用户权限级别">
+        <el-select v-model="form.userAuth" placeholder="请设置用户权限级别" @change="handleChange">
           <el-option v-for="option in userAuthConfig" :key="option.value" :value="option.value" :label="option.name" :disabled="authorize(option.value)"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item v-show="form.userAuth === 'user' || form.userAuth === 'visitor'" label="所属项目">
+        <el-select v-model="form.projectId" placeholder="请选择项目">
+          <el-option v-for="option in projectList" :key="option.projectId" :value="option.projectId" :label="option.projectName"></el-option>
         </el-select>
       </el-form-item>
     </el-form>

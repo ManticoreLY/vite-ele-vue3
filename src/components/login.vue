@@ -18,18 +18,20 @@ const router = useRouter()
 const userId = cookie.get('userId')
 const user = getData('user')
 if (userId) { //已登录
-  if (user.userAuth === 'admin') router.push('/main')
-  else if (user.userAuth === 'manager') router.push('/main/project')
+  if (user.userAuth === 'admin') router.push('/main/user')
+  else if (user.userAuth === 'manager') router.push('/main')
   else if (user.userAuth === 'user') router.push('/main/worker')
 }
 
 function toLogin() {-
   login(form.value).then(res => {
     ElMessage.success('登录成功!')
-    cookie.set('userId', res.data.userId) // cookie存userId
-    setData('user', res.data)
-    console.log(res.data)
-    router.push('/main')
+    const user = res.data
+    cookie.set('userId', user.userId) // cookie存userId
+    setData('user', user)
+    if (user.userAuth === 'admin') router.push('/main/user')
+    else if (user.userAuth === 'manager') router.push('/main')
+    else if (user.userAuth === 'user') router.push('/main/worker')
   }, error => {
     ElMessage.error(error)
   })

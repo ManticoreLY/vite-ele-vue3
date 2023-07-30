@@ -1,5 +1,11 @@
 const menus = [
     {
+        id: "0-0",
+        name: '主页',
+        path: '/main/index',
+        auth: ['admin', 'manager', 'user', 'visitor']
+    },
+    {
         id: "1-0",
         name: '用户管理',
         path: '/main/user',
@@ -9,20 +15,20 @@ const menus = [
         id: '2-0',
         name: '项目管理',
         path: '/main/project',
-        auth: ['admin', 'manager'],
+        auth: ['manager'],
         children: []
     },
     {
         id: '3-0',
         name: '工人管理',
         path: '/main/worker',
-        auth: ['admin', 'manager', 'user'],
+        auth: ['manager', 'user'],
         children: []
     },
     {
         id: '4-0',
         name: '工程量配置',
-        auth: ['admin', 'manager'],
+        auth: ['manager'],
         path: '',
         children: [
             {
@@ -40,7 +46,7 @@ const menus = [
     {
         id: '5-0',
         name: '工序管理',
-        auth: ['admin', 'manager'],
+        auth: ['manager'],
         children: [
             {
                 id: '5-1',
@@ -62,9 +68,26 @@ const menus = [
     },
     {
         id: '7-0',
+        name: '成本管理',
+        auth: ['manager'],
+        children: [
+            {
+                id: '7-1',
+                name: '项目预算',
+                path: '/main/budget'
+            },
+            {
+                id: '7-2',
+                name: '现金记账',
+                path: '/main/account'
+            }
+        ]
+    },
+    {
+        id: '8-0',
         name: '工资结算',
         path: '/main/salary',
-        auth: ['admin', 'manager', 'user']
+        auth: ['manager', 'user']
     }
 ]
 

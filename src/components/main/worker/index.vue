@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { workerStatusConfig } from '@/config/dataConfig.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { findAll } from '@/api/user'
 import base from '@/api'
 
 const workerApi = base('worker')
@@ -14,9 +15,15 @@ const query = ref({
 
 const dataList = ref([])
 
-findAll()
+const userList = ref([])
 
-function findAll() {
+findAll().then(res => {
+  userList.value = res.data
+})
+
+listAll()
+
+function listAll() {
   workerApi.list(query.value).then(res => {
     dataList.value = res.data
   }, err => {
@@ -63,7 +70,8 @@ const form = ref({
   workerName: '', // 姓名
   workerPhone: '', // 手机号
   status: '', // 状态
-  idCode: '' // 项目ID
+  idCode: '', // 项目ID
+  userId: ''
 })
 
 function save() {
@@ -91,7 +99,8 @@ function handleClose() {
     workerName: '', // 姓名
     workerPhone: '', // 手机号
     status: '', // 状态
-    idCode: '' // 项目ID
+    idCode: '', // 项目ID
+    userId: ''
   })
 }
 
@@ -112,7 +121,7 @@ function handleClose() {
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="findAll">查询</el-button>
+        <el-button type="primary" @click="listAll">查询</el-button>
         <el-button type="success" @click="addWorker">新建工人</el-button>
       </el-form-item>
     </el-form>
@@ -148,6 +157,11 @@ function handleClose() {
       <el-form-item label="状态">
         <el-select v-model="form.status" placeholder="请设置状态">
           <el-option v-for="option in workerStatusConfig" :key="option.value" :value="option.value" :label="option.name"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="关联账户">
+        <el-select v-model="form.userId" placeholder="请选择一个关联账户" :disabled="!!form.userId">
+          <el-option v-for="user in userList" :key="user.userId" :value="user.userId" :label="`${user.userName}-${user.phoneNum}`"></el-option>
         </el-select>
       </el-form-item>
     </el-form>

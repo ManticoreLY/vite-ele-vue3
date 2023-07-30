@@ -17,6 +17,13 @@ export function login({phoneNum, password}) {
     })
 }
 
+export function findAll() {
+    return request({
+        url: '/user/list',
+        method: 'GET'
+    })
+}
+
 export function queryUserList({ userName, phoneNum, status }) {
     return request({
         url: '/user/all',

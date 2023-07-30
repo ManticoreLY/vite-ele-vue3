@@ -25,19 +25,19 @@ if (!userId) {
 const projectModelVisible = ref(false)
 const selectedProjectId = ref('')
 
+const projectList = ref([])
+
 if (user.userAuth !== 'admin' && !projectId) {
   projectModelVisible.value = true
+  listProject().then(res => {
+    projectList.value = res.data
+  })
 }
 
 if(project) {
   projectName.value = `${project.projectName}管理系统`
 }
 
-const projectList = ref([])
-
-listProject().then(res => {
-  projectList.value = res.data
-})
 
 function onSelectProject() {
   handleCommand(selectedProjectId.value)
