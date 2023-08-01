@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const server = axios.create({
-    baseURL: 'http://192.168.2.14:8080',
+    baseURL: import.meta.env.VITE_BASE_URL,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json'

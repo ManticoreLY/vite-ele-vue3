@@ -14,12 +14,8 @@ function handle(item) {
   activeIndex.value = item.id
   router.push(item.path)
 }
-function handleOpen() {}
-function handleClose() {}
-
-function handleSelect(item, num) {
-  console.log(item, num)
-}
+// function handleOpen() {}
+// function handleClose() {}
 
 </script>
 
@@ -31,11 +27,8 @@ function handleSelect(item, num) {
       class="menu el-menu-vertical-demo"
       :default-active="activeIndex"
       text-color="#fff"
-      @open="handleOpen"
-      @close="handleClose"
-      @select="handleSelect"
   >
-  <template v-for="(menu, index) in getAuthMenus(user.userAuth)" :key="menu.id">
+  <template v-for="menu in getAuthMenus(user.userAuth)" :key="menu.id">
     <el-menu-item v-if="!menu.children || menu.children.length === 0" :index="menu.id" @click="handle(menu)">
       <template #title>
         <el-icon><Flag /></el-icon>

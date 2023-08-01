@@ -14,6 +14,7 @@ const router = useRouter()
 const projectName = ref('项目管理系统V1.0')
 const userId = cookie.get('userId')
 const projectId = cookie.get('projectId')
+
 const user = getData('user')
 const project = getData('project')
 if (!userId) {
@@ -27,11 +28,12 @@ const selectedProjectId = ref('')
 
 const projectList = ref([])
 
+listProject().then(res => {
+  projectList.value = res.data
+})
+
 if (user.userAuth !== 'admin' && !projectId) {
   projectModelVisible.value = true
-  listProject().then(res => {
-    projectList.value = res.data
-  })
 }
 
 if(project) {

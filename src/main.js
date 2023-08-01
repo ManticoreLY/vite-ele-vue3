@@ -13,6 +13,6 @@ const vue = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     vue.component(key, component)
 }
-
 vue.use(router)
+vue.use(ElementPlus)
 vue.mount('#app')

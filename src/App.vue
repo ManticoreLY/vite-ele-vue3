@@ -9,13 +9,14 @@ function reload () {
     isRouterAlive.value = true
   })
 }
-
 provide('reload', reload)
 </script>
 
 <template>
   <div class="app">
-    <router-view  v-if="isRouterAlive"/>
+    <router-view v-slot="{ Component }">
+        <component v-if="isRouterAlive" :is="Component" />
+    </router-view>
   </div>
 </template>
 
@@ -32,19 +33,7 @@ provide('reload', reload)
   height: 100%;
   background-image: url('/mmgq.jpg');
   background-repeat: no-repeat;
-  background-origin: content-box;
   background-size: 100% 100%;
-}
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+  background-position: center;
 }
 </style>
