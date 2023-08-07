@@ -159,8 +159,8 @@ function onClose() {
         <el-date-picker v-model="dateParams" type="daterange" value-format="YYYY-MM-DD" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="list">开始查询</el-button>
-        <el-button type="success" @click="addItem">开始记账</el-button>
+        <el-button type="primary" icon="Search" @click="list">开始查询</el-button>
+        <el-button type="success" icon="Plus" @click="addItem">开始记账</el-button>
       </el-form-item>
     </el-form>
     <div style="color: #008aff;font-size: 24px; font-weight: 800;">金额合计: {{ cashTotal }}元</div>

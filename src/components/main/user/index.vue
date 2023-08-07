@@ -145,8 +145,8 @@ function handleClose() {
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="findAll">查询</el-button>
-        <el-button type="success" @click="addUser">新建用户</el-button>
+        <el-button type="primary" icon="Search" @click="findAll">查询</el-button>
+        <el-button type="success" icon="Plus" @click="addUser">新建用户</el-button>
       </el-form-item>
     </el-form>
   </div>

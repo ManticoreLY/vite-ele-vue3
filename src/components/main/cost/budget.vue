@@ -98,8 +98,8 @@ function onClose() {
         <el-input v-model="query.name" placeholder="请输入查询栏目的名称"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="list">查询</el-button>
-        <el-button type="primary" @click="addItem">添加栏目</el-button>
+        <el-button type="primary" icon="Search" @click="list">查询</el-button>
+        <el-button type="primary" icon="Plus" @click="addItem">添加栏目</el-button>
       </el-form-item>
     </el-form>
     <div style="color: #008aff;font-size: 24px; font-weight: 800;">总价合计: {{ total }}元</div>
