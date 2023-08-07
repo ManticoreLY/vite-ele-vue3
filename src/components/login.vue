@@ -37,12 +37,17 @@ function toLogin() {-
   })
 }
 
+function alert() {
+  ElMessage.success('请联系项目负责人!')
+}
+
 </script>
 
 <template>
   <div class="bg">
+    <div class="title">东艺集团</div>
     <div v-if="loginStep === 1" class="login-win">
-      <div class="col">登录</div>
+      <div class="col">你好, 请登录</div>
       <div class="form">
         <el-form :model="form" label-width="80px" size="large">
           <el-form-item label="手机号">
@@ -51,11 +56,14 @@ function toLogin() {-
           <el-form-item label="密码">
             <el-input v-model="form.password" type="password" placeholder="请输入密码" @keyup.enter="toLogin"></el-input>
           </el-form-item>
+          <el-form-item>
+            <el-button type="primary" size="large" @click="toLogin" style="width: 100%">登录</el-button>
+          </el-form-item>
+          <div style="padding-left: 80px;" class="flex justify-between">
+            <el-button type="text" @click="alert">新人注册</el-button>
+            <el-button type="text" @click="alert">忘记密码</el-button>
+          </div>
         </el-form>
-      </div>
-      <div class="login-btn">
-        <el-button type="text" size="large">新人注册</el-button>
-        <el-button type="primary" size="large" @click="toLogin">登录</el-button>
       </div>
     </div>
     <div></div>
@@ -69,17 +77,26 @@ function toLogin() {-
   display: flex;
   justify-content: center;
   align-items: center;
+  .title{
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    color: #f9f9f9;
+    font-weight: 800;
+    font-size: 36px;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
   .login-win{
     position: relative;
     width: 540px;
     height: 360px;
     border-radius: 12px;
     box-shadow: 0 5px 12px 0 #efefef;
-    background-color: #FFFFFF;
+    background-color: #f9f9f9;
     .col{
       width: 100%;
-      height: 60px;
-      line-height: 60px;
+      height: 80px;
+      line-height: 80px;
       font-size: 16px;
       font-weight: 800;
     }
