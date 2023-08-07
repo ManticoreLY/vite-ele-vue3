@@ -91,8 +91,8 @@ function handleSave() {
         <el-input v-model="query.jobName" placeholder="请输入工序名称"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="list">查询</el-button>
-        <el-button type="success" @click="addItem">新建工序</el-button>
+        <el-button type="primary" icon="Search" @click="list">查询</el-button>
+        <el-button type="success" icon="Plus" @click="addItem">新建工序</el-button>
       </el-form-item>
     </el-form>
   </div>

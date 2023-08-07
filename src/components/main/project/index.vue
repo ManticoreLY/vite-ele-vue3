@@ -120,8 +120,8 @@ function handleClose() {
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="findAll">查询</el-button>
-        <el-button type="success" @click="addProject">新建项目</el-button>
+        <el-button type="primary" icon="Search" @click="findAll">查询</el-button>
+        <el-button type="success" icon="Plus" @click="addProject">新建项目</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -138,9 +138,9 @@ function handleClose() {
     </el-table-column>
   </el-table>
 
-  <div class="pagination">
+<!--  <div class="pagination">
     <el-pagination background layout="prev, pager, next" :total="1000" />
-  </div>
+  </div>-->
 
   <el-dialog v-model="model.visible" :title="model.title" width="600px" :before-close="handleClose">
     <el-form :model="form" size="large" label-width="96px">

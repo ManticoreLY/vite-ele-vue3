@@ -11,6 +11,16 @@ const query = ref({
   phoneNum: '',
   status: ''
 })
+const user = getData('user')
+const userOption = userAuthConfig.slice(userAuthConfig.findIndex(item => item.value === user.userAuth) + 1)
+
+function hasPermission(auth) {
+  if (user.userAuth === 'admin') return true
+  else {
+    const i = userOption.find(item => item.value === auth)
+    if (i) return !!i
+  }
+}
 
 const dataList = ref([])
 
@@ -84,14 +94,7 @@ const form = ref({
   status: '', // 状态
   password: '', // 密码
   userAuth: '', // 权限级别
-  projectId: ''
 })
-
-const authorize = (auth) => {
-  const user = getData('user')
-  if (user.userAuth !== 'admin' && auth === 'admin') return true
-  return false
-}
 
 function handleChange() { form.value.projectId = ''}
 
@@ -155,16 +158,18 @@ function handleClose() {
     <el-table-column label="状态" prop="status" :formatter="statusFormat"></el-table-column>
     <el-table-column label="用户权限" prop="userAuth" :formatter="autoFormat"></el-table-column>
     <el-table-column label="操作" #default="{ row }">
-      <el-button v-if="row.status === 0" type="text" @click="setStatus(row.userId, 1)">启用</el-button>
-      <el-button v-else-if="row.status === 1" type="text" plain @click="setStatus(row.userId, 0)">停用</el-button>
-      <el-button type="text" @click="editUser(row)">编辑</el-button>
-      <el-button type="text" @click="remove(row.userId)">删除</el-button>
+      <span v-if="hasPermission(row.userAuth)" style="margin-right: 16px;">
+        <el-button v-if="row.status === 0" type="text" @click="setStatus(row.userId, 1)">启用</el-button>
+        <el-button v-else-if="row.status === 1" type="text" plain @click="setStatus(row.userId, 0)">停用</el-button>
+      </span>
+      <el-button v-if="hasPermission(row.userAuth)" type="text" @click="editUser(row)">编辑</el-button>
+      <el-button v-if="hasPermission(row.userAuth)" type="text" @click="remove(row.userId)">删除</el-button>
     </el-table-column>
   </el-table>
 
-  <div class="pagination">
+<!--  <div class="pagination">
     <el-pagination background layout="prev, pager, next" :total="1000" />
-  </div>
+  </div>-->
 
   <el-dialog v-model="model.visible" :title="model.title" width="600px" :before-close="handleClose">
     <el-form :model="form" size="large" label-width="96px">
@@ -182,12 +187,7 @@ function handleClose() {
       </el-form-item>
       <el-form-item label="权限设置">
         <el-select v-model="form.userAuth" placeholder="请设置用户权限级别" @change="handleChange">
-          <el-option v-for="option in userAuthConfig" :key="option.value" :value="option.value" :label="option.name" :disabled="authorize(option.value)"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item v-show="form.userAuth === 'user' || form.userAuth === 'visitor'" label="所属项目">
-        <el-select v-model="form.projectId" placeholder="请选择项目">
-          <el-option v-for="option in projectList" :key="option.projectId" :value="option.projectId" :label="option.projectName"></el-option>
+          <el-option v-for="option in userOption" :key="option.value" :value="option.value" :label="option.name"></el-option>
         </el-select>
       </el-form-item>
     </el-form>

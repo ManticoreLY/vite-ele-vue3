@@ -1,8 +1,10 @@
 <script setup>
 import { ElMessage } from 'element-plus'
-import { ref, nextTick } from 'vue'
+import { ref, inject } from 'vue'
 import base from '@/api'
 import FloorJobApi from '@/api/floorJob'
+
+const reload = inject('reload')
 
 const buildingApi = base('building')
 
@@ -58,6 +60,7 @@ function objectSpanMethod({row, column, rowIndex, columnIndex}) {
 function updateProgress(item) {
   FloorJobApi.generateProgress(item.floorId).then(res => {
     ElMessage.success('进度已更新, 请刷新数据')
+    reload()
   }, err => {
     ElMessage.error(err)
   })
@@ -82,7 +85,7 @@ function saveFinishCount(item) {
   <div class="flex">
     <el-form :model="query" inline>
       <el-form-item>
-        <el-button tag="div" role="button" v-for="item in buildingList" :key="item.buildingId" :type="query.buildingId === item.buildingId ? 'primary' : 'plain'" @click="queryFloor(item.buildingId)">{{ item.buildingName }}</el-button>
+        <el-button tag="div" role="button" class="class-button" v-for="item in buildingList" :key="item.buildingId" :type="query.buildingId === item.buildingId ? 'primary' : 'plain'" @click="queryFloor(item.buildingId)">{{ item.buildingName }}</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -110,7 +113,7 @@ function saveFinishCount(item) {
         <el-input v-model="row.finishCount" @keyup.enter="saveFinishCount(row)">
           <template #suffix>{{ row.jobUnit }}</template>
           <template #append>
-            <el-button type="primary" @click="saveFinishCount(row)">Save</el-button>
+            <el-button type="primary" @click="saveFinishCount(row)">确定</el-button>
           </template>
         </el-input>
       </template>
@@ -133,5 +136,8 @@ function saveFinishCount(item) {
   display: block;
   margin-top: 10px;
   font-size: 12px;
+}
+.class-button{
+  margin-bottom: 20px;
 }
 </style>

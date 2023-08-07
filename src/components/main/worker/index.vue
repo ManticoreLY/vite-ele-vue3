@@ -1,5 +1,7 @@
 <script setup>
-import { ref } from 'vue'
+import { getData } from '@/utils/storage'
+import { ref, onMounted } from 'vue'
+import * as XLSX from 'xlsx'
 import { workerStatusConfig } from '@/config/dataConfig.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { findAll } from '@/api/user'
@@ -15,10 +17,14 @@ const query = ref({
 
 const dataList = ref([])
 
+const user = getData('user')
+
 const userList = ref([])
 
-findAll().then(res => {
-  userList.value = res.data
+onMounted(() => {
+  findAll(user.userAuth).then(res => {
+    userList.value = res.data
+  })
 })
 
 listAll()
@@ -29,6 +35,20 @@ function listAll() {
   }, err => {
     ElMessage.error(err)
   })
+}
+
+function exportExcel() {
+  const tableData = dataList.value.map(item => ({
+    '姓名': item.workerName,
+    '手机号': item.workerPhone,
+    '银行卡': item.bankCard,
+    '开户行': item.bankAddr
+  }))
+  const ws = XLSX.utils.json_to_sheet(tableData)
+  const wb = XLSX.utils.book_new()
+  console.log(wb)
+  XLSX.utils.book_append_sheet(wb, ws, 'Sheet1')
+  XLSX.writeFile(wb, '工人信息表.xlsx')
 }
 
 const model = ref({
@@ -71,6 +91,8 @@ const form = ref({
   workerPhone: '', // 手机号
   status: '', // 状态
   idCode: '', // 项目ID
+  bankCard: '', //银行卡
+  bankAddr: '', // 开户行地址
   userId: ''
 })
 
@@ -100,6 +122,8 @@ function handleClose() {
     workerPhone: '', // 手机号
     status: '', // 状态
     idCode: '', // 项目ID
+    bankCard: '',
+    bankAddr: '',
     userId: ''
   })
 }
@@ -121,17 +145,20 @@ function handleClose() {
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="listAll">查询</el-button>
-        <el-button type="success" @click="addWorker">新建工人</el-button>
+        <el-button type="primary" icon="Search" @click="listAll">查询</el-button>
+        <el-button type="success" icon="Plus" @click="addWorker">新建工人</el-button>
+        <el-button type="primary" icon="Link" @click="exportExcel">导出Excel</el-button>
       </el-form-item>
     </el-form>
   </div>
   <el-divider />
-  <el-table :data="dataList">
+  <el-table id="table" :data="dataList">
     <el-table-column label="序号" type="index" width="80"></el-table-column>
     <el-table-column label="姓名" prop="workerName"></el-table-column>
     <el-table-column label="手机号" prop="workerPhone"></el-table-column>
     <el-table-column label="身份证" prop="idCode"></el-table-column>
+    <el-table-column label="银行卡" prop="bankCard"></el-table-column>
+    <el-table-column label="开户行" prop="bankAddr"></el-table-column>
     <el-table-column label="状态" prop="status" :formatter="statusFormat"></el-table-column>
     <el-table-column label="操作" #default="{ row }">
       <el-button type="text" @click="editWorker(row)">编辑</el-button>
@@ -139,9 +166,9 @@ function handleClose() {
     </el-table-column>
   </el-table>
 
-  <div class="pagination">
+<!--  <div class="pagination">
     <el-pagination background layout="prev, pager, next" :total="1000" />
-  </div>
+  </div>-->
 
   <el-dialog v-model="model.visible" :title="model.title" width="600px" :before-close="handleClose">
     <el-form :model="form" size="large" label-width="96px">
@@ -154,13 +181,19 @@ function handleClose() {
       <el-form-item label="身份证">
         <el-input v-model="form.idCode" placeholder="请输入身份证" maxlength="18"></el-input>
       </el-form-item>
+      <el-form-item label="银行卡号">
+        <el-input v-model="form.bankCard" placeholder="请输入银行卡号" maxlength="21"></el-input>
+      </el-form-item>
+      <el-form-item label="开户行">
+        <el-input v-model="form.bankAddr" placeholder="请输入开户行地址" maxlength="28"></el-input>
+      </el-form-item>
       <el-form-item label="状态">
         <el-select v-model="form.status" placeholder="请设置状态">
           <el-option v-for="option in workerStatusConfig" :key="option.value" :value="option.value" :label="option.name"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="关联账户">
-        <el-select v-model="form.userId" placeholder="请选择一个关联账户" :disabled="!!form.userId">
+        <el-select v-model="form.userId" placeholder="请选择一个关联账户">
           <el-option v-for="user in userList" :key="user.userId" :value="user.userId" :label="`${user.userName}-${user.phoneNum}`"></el-option>
         </el-select>
       </el-form-item>

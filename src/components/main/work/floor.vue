@@ -33,14 +33,14 @@ function queryFloor(buildingId) {
 const dataList = ref([])
 
 function addItem() {
-  model.value.title = '新建工序'
+  model.value.title = '新建楼层'
   model.value.visible = true
   model.value.isEdit = false
 
   form.value = Object.assign(form.value, { buildingId: query.value.buildingId })
 }
 function editItem(item) {
-  model.value.title = '编辑工序'
+  model.value.title = '编辑楼层'
   model.value.visible = true
   model.value.isEdit = true
 
@@ -162,8 +162,8 @@ function saveRelatedForm() {
         <el-button tag="div" role="button" v-for="item in buildingList" :key="item.buildingId" :type="query.buildingId === item.buildingId ? 'primary' : 'plain'" @click="queryFloor(item.buildingId)">{{ item.buildingName }}</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button type="success" @click="addItem">新建楼层</el-button>
-        <el-button type="primary" @click="relateItemInBatch">批量关联工序</el-button>
+        <el-button type="success" icon="Plus" @click="addItem">新建楼层</el-button>
+        <el-button type="primary" icon="SetUp" @click="relateItemInBatch">批量关联工序</el-button>
       </el-form-item>
     </el-form>
   </div>

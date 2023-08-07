@@ -1,15 +1,9 @@
 const menus = [
     {
-        id: "0-0",
-        name: '主页',
-        path: '/main/index',
-        auth: ['admin', 'manager', 'user', 'visitor']
-    },
-    {
         id: "1-0",
         name: '用户管理',
         path: '/main/user',
-        auth: ['admin']
+        auth: ['admin', 'manager']
     },
     {
         id: '2-0',
@@ -22,7 +16,7 @@ const menus = [
         id: '3-0',
         name: '工人管理',
         path: '/main/worker',
-        auth: ['manager', 'user'],
+        auth: ['manager'],
         children: []
     },
     {
@@ -38,8 +32,13 @@ const menus = [
             },
             {
                 id: '4-2',
-                name: '楼层管理',
+                name: '楼层工序管理',
                 path: '/main/floor'
+            },
+            {
+                id: '4-3',
+                name: '工程量配置',
+                path: '/main/FloorJob',
             },
         ]
     },
@@ -47,18 +46,7 @@ const menus = [
         id: '5-0',
         name: '工序管理',
         auth: ['manager'],
-        children: [
-            {
-                id: '5-1',
-                name: '楼层工序配置',
-                path: '/main/FloorJob',
-            },
-            {
-                id: '5-2',
-                name: '工序设置',
-                path: '/main/job',
-            },
-        ]
+        path: '/main/job',
     },
     {
         id: '6-0',
@@ -87,8 +75,20 @@ const menus = [
         id: '8-0',
         name: '工资结算',
         path: '/main/salary',
-        auth: ['manager', 'user']
-    }
+        auth: ['manager']
+    },
+    {
+        id: '9-0',
+        name: '我的结算',
+        path: '/main/my',
+        auth: ['user']
+    },
+    {
+        id: "10-0",
+        name: '使用指导',
+        path: '/main/guide',
+        auth: ['manager']
+    },
 ]
 
 export function getAuthMenus(auth) {

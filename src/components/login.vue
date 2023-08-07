@@ -18,9 +18,7 @@ const router = useRouter()
 const userId = cookie.get('userId')
 const user = getData('user')
 if (userId) { //已登录
-  if (user.userAuth === 'admin') router.push('/main/user')
-  else if (user.userAuth === 'manager') router.push('/main')
-  else if (user.userAuth === 'user') router.push('/main/worker')
+  router.push('/main/index')
 }
 
 function toLogin() {-
@@ -29,9 +27,7 @@ function toLogin() {-
     const user = res.data
     cookie.set('userId', user.userId) // cookie存userId
     setData('user', user)
-    if (user.userAuth === 'admin') router.push('/main/user')
-    else if (user.userAuth === 'manager') router.push('/main')
-    else if (user.userAuth === 'user') router.push('/main/worker')
+    router.push('/main/index')
   }, error => {
     ElMessage.error(error)
   })

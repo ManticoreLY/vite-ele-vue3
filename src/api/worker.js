@@ -53,3 +53,10 @@ export function listWorkerJob(workerId) {
         method: 'GET'
     })
 }
+
+export function findWorker() {
+    return request({
+        url: '/worker/user',
+        method: 'GET'
+    })
+}

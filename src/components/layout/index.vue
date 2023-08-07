@@ -1,10 +1,10 @@
 <script setup>
+import { listProject } from '@/api/project'
 import { ref, inject } from 'vue'
 import Menus from '@/components/layout/menus.vue'
 import cookie from '@/utils/cookies.js'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { listProject } from '@/api/project.js'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { getData, setData, removeData } from '@/utils/storage.js'
 
@@ -22,29 +22,16 @@ if (!userId) {
   router.push('/')
 }
 
+if(project) {
+  projectName.value = `${project.projectName}管理系统`
+}
 
-const projectModelVisible = ref(false)
-const selectedProjectId = ref('')
-
-const projectList = ref([])
+const projectList = ref()
 
 listProject().then(res => {
   projectList.value = res.data
 })
 
-if (user.userAuth !== 'admin' && !projectId) {
-  projectModelVisible.value = true
-}
-
-if(project) {
-  projectName.value = `${project.projectName}管理系统`
-}
-
-
-function onSelectProject() {
-  handleCommand(selectedProjectId.value)
-  projectModelVisible.value = false
-}
 const handleCommand = (command) => {
   cookie.set('projectId', command)
   const project = projectList.value.find(item => item.projectId === command)
@@ -95,14 +82,6 @@ function logout() {
     </el-container>
   </el-container>
 
-  <el-dialog v-model="projectModelVisible" title="请选择项目" width="480px">
-    <el-radio-group v-model="selectedProjectId">
-      <el-radio v-for="(project, index) in projectList" :key="index" :label="project.projectId">{{ project.projectName }}</el-radio>
-    </el-radio-group>
-    <template #footer>
-      <el-button type="primary" @click="onSelectProject">进入系统</el-button>
-    </template>
-  </el-dialog>
 </template>
 
 <style lang="scss" scoped>

@@ -14,8 +14,13 @@ const Router = createRouter({
             children: [
                 {
                     path: 'index',
-                    name: '主页',
+                    name: '空白页',
                     component: () => import('@/components/main/index.vue')
+                },
+                {
+                    path: 'guide',
+                    name: '使用引导',
+                    component: () => import('@/components/main/guide.vue')
                 },
                 {
                     path: 'user',
@@ -71,6 +76,11 @@ const Router = createRouter({
                     path: 'salary',
                     name: '工人结算',
                     component: () => import('@/components/main/worker/salary.vue')
+                },
+                {
+                    path: 'my',
+                    name: '我的结算',
+                    component: () => import('@/components/main/worker/my.vue')
                 }
             ]
         }

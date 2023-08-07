@@ -17,9 +17,9 @@ export function login({phoneNum, password}) {
     })
 }
 
-export function findAll() {
+export function findAll(auth) {
     return request({
-        url: '/user/list',
+        url: `/user/list/${auth}`,
         method: 'GET'
     })
 }

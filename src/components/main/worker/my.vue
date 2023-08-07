@@ -1,21 +1,22 @@
 <script setup>
+import cookies from '@/utils/cookies'
 import { ref } from 'vue'
-import { listWorker, listWorkerJob } from '@/api/worker'
+import { findWorker, listWorkerJob } from '@/api/worker'
 
 const selectedWorkerId = ref('')
 
-const workerList = ref([])
+const workerId = ref('')
 
-function queryWorkers() {
-  listWorker().then(res => {
-    workerList.value = res.data
-    if(workerList.value && workerList.value.length) {
-      queryWorkerJobInfo(workerList.value[0].workerId)
-    }
+const userId = cookies.get('userId')
+
+function findMyWorkerId() {
+  findWorker().then(res => {
+    workerId.value = res.data.workerId
+    queryWorkerJobInfo(workerId.value)
   })
 }
 
-queryWorkers()
+findMyWorkerId()
 
 const jobList = ref([])
 
@@ -34,10 +35,7 @@ function queryWorkerJobInfo(workerId) {
 </script>
 
 <template>
-  <div class="flex justify-between">
-    <div style="width: 80%" class="flex">
-      <el-button tag="div" role="button" v-for="worker in workerList" :key="worker.workerId" :type="selectedWorkerId === worker.workerId ? 'primary': ''" @click="queryWorkerJobInfo(worker.workerId)">{{ worker.workerName }}</el-button>
-    </div>
+  <div class="flex justify-end">
     <div style="color: #008aff;font-size: 24px; font-weight: 800;">应得收入合计: {{ totalSalary }}元</div>
   </div>
   <el-divider />
