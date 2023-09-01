@@ -3,6 +3,15 @@ import request from '@/utils/axios'
 
 export default {
     ...base('floor'),
+    saveInBatch({ floorNameList, buildingId }) {
+        return request({
+            url: '/floor/save/batch',
+            method: 'POST',
+            data: {
+                floorNameList, buildingId
+            }
+        })
+    },
     findByBuildingId(buildingId) {
       return request({
           url: `/floor/list/${buildingId}`,

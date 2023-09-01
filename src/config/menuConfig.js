@@ -9,17 +9,29 @@ const menus = [
         id: '2-0',
         name: '项目管理',
         path: '/main/project',
-        auth: ['manager'],
+        auth: ['manager', 'visitor'],
         children: []
     },
     {
         id: '3-0',
         name: '工人管理',
         path: '/main/worker',
-        auth: ['manager'],
+        auth: ['manager', 'visitor'],
         children: []
     },
     {
+        id: '4-0',
+        name: '楼栋配置',
+        path: '/main/building',
+        auth: ['manager', 'visitor'],
+    },
+    {
+        id: '5-0',
+        name: '楼层管理',
+        path: '/main/floor',
+        auth: ['manager', 'visitor'],
+    },
+    /*{
         id: '4-0',
         name: '工程量配置',
         auth: ['manager'],
@@ -32,32 +44,32 @@ const menus = [
             },
             {
                 id: '4-2',
-                name: '楼层工序管理',
+                name: '楼层管理',
                 path: '/main/floor'
             },
-            {
+            /!*{
                 id: '4-3',
                 name: '工程量配置',
                 path: '/main/FloorJob',
-            },
+            },*!/
         ]
-    },
+    },*/
     {
-        id: '5-0',
+        id: '6-0',
         name: '工序管理',
-        auth: ['manager'],
+        auth: ['manager', 'visitor'],
         path: '/main/job',
     },
     {
-        id: '6-0',
-        name: '进度管理',
+        id: '7-0',
+        name: '查看进度',
         path: '/main/progress',
-        auth: ['manager']
+        auth: ['manager', 'visitor']
     },
     {
-        id: '7-0',
+        id: '8-0',
         name: '成本管理',
-        auth: ['manager'],
+        auth: ['manager', 'visitor'],
         children: [
             {
                 id: '7-1',
@@ -72,22 +84,22 @@ const menus = [
         ]
     },
     {
-        id: '8-0',
+        id: '9-0',
         name: '工资结算',
         path: '/main/salary',
-        auth: ['manager']
+        auth: ['manager', 'visitor']
     },
     {
-        id: '9-0',
+        id: '10-0',
         name: '我的结算',
         path: '/main/my',
         auth: ['user']
     },
     {
-        id: "10-0",
+        id: "11-0",
         name: '使用指导',
         path: '/main/guide',
-        auth: ['manager']
+        auth: ['manager', 'visitor']
     },
 ]
 

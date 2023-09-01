@@ -50,10 +50,10 @@ function queryFloor(buildingId) {
 function objectSpanMethod({row, column, rowIndex, columnIndex}) {
   if (columnIndex === 0 || columnIndex === 1 || columnIndex === 6) {
     const i = rowIndexArray.value.indexOf(rowIndex)
-    if (i > -1) {
+    if (i > -1 && rowIndexArray.value.length > 1) {
       return { rowspan: rowIndexArray.value[i+1] - rowIndexArray.value[i], colspan: 1 }
     }
-    return { rowspan: 0, colspan: 0 }
+    return { rowspan: 0, colspan: 1 }
   }
 }
 
@@ -110,12 +110,13 @@ function saveFinishCount(item) {
     </el-table-column>
     <el-table-column label="已完成" prop="finishCount" width="260px">
       <template #default="{row}">
-        <el-input v-model="row.finishCount" @keyup.enter="saveFinishCount(row)">
+<!--        <el-input v-model="row.finishCount" @keyup.enter="saveFinishCount(row)">
           <template #suffix>{{ row.jobUnit }}</template>
           <template #append>
             <el-button type="primary" @click="saveFinishCount(row)">确定</el-button>
           </template>
-        </el-input>
+        </el-input>-->
+        <div v-if="row.finishCount" style="width: 100%; height: 100%; color: #d01111">已完成</div>
       </template>
     </el-table-column>
     <el-table-column label="负责人/操作人" prop="workerName"></el-table-column>

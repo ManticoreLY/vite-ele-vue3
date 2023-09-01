@@ -29,5 +29,11 @@ export default {
                 floorId
             }
         })
+    },
+    listJobs(floorId) {
+        return request({
+            url: `/floorJob/floor/${floorId}`,
+            method: 'GET'
+        })
     }
 }
