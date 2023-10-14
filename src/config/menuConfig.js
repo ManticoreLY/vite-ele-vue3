@@ -2,8 +2,20 @@ const menus = [
     {
         id: "1-0",
         name: '用户管理',
-        path: '/main/user',
-        auth: ['admin', 'manager']
+        path: '',
+        auth: ['admin', 'manager'],
+        children: [
+            {
+                id: '1-1',
+                name: '用户列表',
+                path: '/main/user'
+            },
+            {
+                id: '1-2',
+                name: '操作记录',
+                path: '/main/record'
+            }
+        ]
     },
     {
         id: '2-0',

@@ -28,6 +28,11 @@ const Router = createRouter({
                     component: () => import('@/components/main/user/index.vue')
                 },
                 {
+                    path: 'record',
+                    name: '操作记录',
+                    component: () => import('@/components/main/user/record.vue')
+                },
+                {
                     path: 'project',
                     name: '项目管理',
                     component: () => import('@/components/main/project/index.vue')

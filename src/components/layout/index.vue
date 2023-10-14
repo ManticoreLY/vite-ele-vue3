@@ -7,6 +7,7 @@ import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { getData, setData, removeData } from '@/utils/storage.js'
+import {　saveRecord } from '@/api/record'
 
 const reload = inject('reload')
 
@@ -47,7 +48,9 @@ function logout() {
     cookie.remove('userId')
     removeData('project')
     cookie.remove('projectId')
-    router.push('/')
+    saveRecord({userId, userName: user.userName, behavior: 'logout'}).then(() => {
+      router.push('/')
+    })
   })
 }
 </script>
